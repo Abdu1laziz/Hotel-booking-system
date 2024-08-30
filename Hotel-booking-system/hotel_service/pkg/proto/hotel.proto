@@ -1,0 +1,79 @@
+syntax="proto3";
+
+option go_package="./hotel";
+
+message CreateHotelRequest{
+    string name=1;
+    string location=2;
+    int32 rating=3;
+    string address=4;
+}
+
+message GeneralResponse{
+    string message=1;
+}
+
+message GetsRequest{}
+
+message UpdateHotelRequest{
+    int32 id=1;
+    string name=2;
+    string location=3;
+    int32 rating=4;
+    string address=5;
+}
+
+message GetHotelRequest{
+    int32 id=1;
+}
+
+message GetsResponse{
+    repeated UpdateHotelRequest hotels=1;
+}
+message GetHotelResponse{
+    int32 id=1;
+    string name=2;
+    string location=3;
+    int32 rating=4;
+    string address=5;
+    repeated UpdateRoomRequest rooms=6;
+}
+
+
+
+message CreateRoomRequest{
+    int32 hotel_id=1;
+    string room_type=2;
+    float price_per_night=3;
+}
+
+message GetroomRequest{
+    int32 hotel_id=1;
+    int32 id=2;
+    bool available=3;
+}
+
+message GetroomResponse{
+repeated UpdateRoomRequest rooms=1;
+}
+
+message UpdateRoomRequest{
+    bool available=1;
+    string room_type=2;
+    float price_per_night=3;
+    int32 id=4;
+    int32 hotel_id=5;
+}
+
+service Hotel{
+    rpc CreateHotel(CreateHotelRequest)returns(GeneralResponse);
+    rpc GetHotel(GetHotelRequest)returns(GetHotelResponse);
+    rpc Gets(GetsRequest)returns(GetsResponse);
+    rpc Update(UpdateHotelRequest)returns(GeneralResponse);
+    rpc Delte(GetHotelRequest)returns(GeneralResponse);
+    rpc CreateRoom(CreateRoomRequest)returns(GeneralResponse);
+    rpc Get(GetroomRequest)returns(UpdateRoomRequest);
+    rpc GetRooms(GetroomRequest)returns(GetroomResponse);
+    rpc UpdateRoom(UpdateRoomRequest)returns(GeneralResponse);
+    rpc DeleteRoom(GetroomRequest)returns(GeneralResponse);
+}

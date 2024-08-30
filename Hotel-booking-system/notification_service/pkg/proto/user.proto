@@ -1,0 +1,62 @@
+syntax="proto3";
+
+
+option go_package="./user";
+
+
+message RegisterUserRequest{
+    string username=1;
+    int32 age=2;
+    string email=3;
+    string password=4;
+}
+
+message GeneralResponse2{
+    string message=1;
+}
+
+message VerifyRequest{
+    string email=1;
+    string password=2;
+}
+
+message LogInRequest{
+    string email=1;
+    string password=2;
+}
+
+message LogInResposne{
+    bool status=1;
+}
+message GetUserRequest{
+    int32 id=1;
+}
+
+message LastInsertedUser{}
+
+message GetUserResponse{
+    int32 id=1;
+    string username=2;
+    int32 age=3;
+    string email=4;
+    bool logout=5;
+}
+
+message UpdateUserRequest{
+    int32 id=1;
+    string username=2;
+    int32 age=3;
+    string email=4;
+    string password=5;
+}
+
+
+service User{
+    rpc Register(RegisterUserRequest)returns(GeneralResponse2);
+    rpc LogIn(LogInRequest)returns(LogInResposne);
+    rpc GetUser(GetUserRequest)returns(GetUserResponse);
+    rpc LastInserted(LastInsertedUser)returns(GetUserResponse);
+    rpc UpdateUser(UpdateUserRequest)returns(GeneralResponse2);
+    rpc LogOut(GetUserRequest)returns(GeneralResponse2);
+    rpc DeleteUser(GetUserRequest)returns(GeneralResponse2);
+}

@@ -1,0 +1,29 @@
+syntax="proto3";
+
+option go_package="/notification";
+
+message GetNotification{}
+
+message ProduceMessage{
+    int32 user_id=1;
+    string message=2;
+}
+
+message EMailSendResponse{
+    string message=1;
+}
+
+message AddnewUser{
+    string user_id=1;
+}
+
+message EmailSend{
+    string email=1;
+    string message=2;
+}
+
+service Notification{
+    rpc Notification(ProduceMessage)returns(EMailSendResponse);
+    rpc AddUser(AddnewUser)returns(EMailSendResponse);
+    rpc Email(EmailSend)returns(EMailSendResponse);
+}

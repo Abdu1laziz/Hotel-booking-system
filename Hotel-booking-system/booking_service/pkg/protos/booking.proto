@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+option go_package="/booking";
+
+import "google/protobuf/timestamp.proto";
+
+message BookHotelRequest {
+  int32 userID = 1;
+  int32 hotelID = 2;
+  int32 room_id=3;
+  string roomType = 4;
+  google.protobuf.Timestamp checkInDate = 5;
+  google.protobuf.Timestamp checkOutDate = 6;
+}
+
+message GetUsersBookRequest{
+    int32 id = 1;
+}
+
+message GetUsersBookResponse{
+    int32 id=9;
+    int32 userID = 1;
+    int32 hotelID = 2;
+    int32 room_id=3;
+    string roomType = 4;
+    google.protobuf.Timestamp checkInDate = 5;
+    google.protobuf.Timestamp checkOutDate = 6;
+    float totalAmount = 7;
+    string status=8;
+}
+message BookHotelUpdateRequest{
+    int32 id=1;
+    int32 room_id=2;
+    string roomType = 3;
+    google.protobuf.Timestamp checkInDate = 4;
+    google.protobuf.Timestamp checkOutDate = 5;
+}
+
+message GeneralResponse{
+    string message=1;
+}
+
+message CancelROomRequest{
+    int32 id=1;
+}
+
+message CreateWaitingList{
+    int32 user_id=1;
+    string user_email=2;
+    string room_type=3;
+    int32 hotel_id=4;
+    google.protobuf.Timestamp checkInDate = 5;
+    google.protobuf.Timestamp checkOutDate = 6;
+}
+
+message GetWaitinglistRequest{
+    int32 id=1;
+}
+
+message GetWaitinglistResponse{
+    int32 user_id=1;
+    string user_email=2;
+    string room_type=3;
+    int32 hotel_id=4;
+    google.protobuf.Timestamp checkInDate = 5;
+    string status=6;
+    int32 id=7;
+    google.protobuf.Timestamp checkOutDate = 8;
+}
+
+message Response{
+    repeated GetWaitinglistResponse users=1;
+}
+
+message UpdateWaitingListRequest{
+    int32 user_id=1;
+    string room_type=3;
+    int32 hotel_id=4;
+    google.protobuf.Timestamp checkInDate = 5;
+    int32 id=6;
+    google.protobuf.Timestamp checkOutDate = 7;
+}
+
+message DeleteWaitingList{
+    int32 id=1;
+}
+
+message Bytes{
+    bytes all=1;
+}
+
+message Request{}
+service BookHotel{
+    rpc Create(Bytes)returns(GeneralResponse);
+    rpc Get(GetUsersBookRequest)returns(GetUsersBookResponse);
+    rpc Update(Bytes)returns(GeneralResponse);
+    rpc Delete(Bytes)returns(GeneralResponse);
+    rpc CreateWaiting(Bytes)returns(GeneralResponse);
+    rpc GetWaitinglist(GetWaitinglistRequest)returns(GetWaitinglistResponse);
+    rpc Getall(Request)returns(Response);
+    rpc UpdateWaiting(Bytes)returns(GeneralResponse);
+    rpc CancelWaiting(Bytes)returns(GeneralResponse);
+}
